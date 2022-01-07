@@ -14,7 +14,7 @@ constexpr uint8_t SS_PIN = 4;
 ESP8266WebServer server(80);
 
 void setup() {
-  
+
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
 
@@ -29,7 +29,7 @@ void setup() {
   }
   server.on("/", handleRoot);
   server.begin();
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 void loop() {
   server.handleClient();
@@ -37,13 +37,15 @@ void loop() {
 }
 
 void handleRoot() {
-  String query = server.argName(0);
-  if (query != "") {
+  String query = server.argName(0) + "=" + server.arg(0);
+  if (query != "=") {
     Serial.println(query);
   }
 
   String message = "";
-  message = Serial.readString();
+  if (Serial.available()) {
+    message = Serial.readStringUntil('\r\n');
+  }
   server.send(200, "text/plain", message);
 
 }
