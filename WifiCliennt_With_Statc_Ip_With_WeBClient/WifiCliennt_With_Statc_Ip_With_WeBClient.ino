@@ -35,7 +35,7 @@ void loop() {
   if (WiFi.status() == WL_CONNECTED) {
 
     WiFiClient client;
-    if (http.begin(client, "https://raw.githubusercontent.com/MustafaAlbaghdadi/Laravel-School-Timetable-Calendar/main/README.md?token=GHSAT0AAAAAABNQECTQV5DKLJ5QBKFEB7JWYOYICAA")) {
+    if (http.begin(client, "http://176.223.140.119:1003/api/user/gen?pass=123")) {
 
       Serial.print("[HTTP] GET...\n");
       // start connection and send HTTP header

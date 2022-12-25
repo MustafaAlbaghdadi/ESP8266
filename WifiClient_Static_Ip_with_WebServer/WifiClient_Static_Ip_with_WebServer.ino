@@ -4,8 +4,8 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 #ifndef APSSID
-#define APSSID "ahmed"
-#define APPSK  "ahmed1234"
+#define APSSID "TS-Coder"
+#define APPSK  "securityhilla2"
 #endif
 const char *ssid = APSSID;
 const char *password = APPSK;
@@ -29,22 +29,22 @@ void setup() {
   }
   server.on("/", handleRoot);
   server.begin();
-  Serial.begin(115200);
+  Serial.begin(9600);
 }
+String message = "";
+
 void loop() {
+  if (Serial.available()) {
+    message = Serial.readStringUntil('\r\n');
+  }
   server.handleClient();
 
 }
 
 void handleRoot() {
-  String query = server.argName(0) + "=" + server.arg(0);
-  if (query != "=") {
+  String query = server.argName(0) ;
+  if (query != "") {
     Serial.println(query);
-  }
-
-  String message = "";
-  if (Serial.available()) {
-    message = Serial.readStringUntil('\r\n');
   }
   server.send(200, "text/plain", message);
 
